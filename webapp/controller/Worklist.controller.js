@@ -166,10 +166,15 @@ sap.ui.define([
 			}
 
 			const oDataModel = new ODataModel("/sap/opu/odata/sap/ZC_PS_EMS_CONTACT_TP_CDS/");
+
+			// Remove the triedToSave state variable from contract
+			const contactBodyData = JSON.parse(JSON.stringify(newContact));
+			delete contactBodyData.triedToSave;
+			console.log(contactBodyData);
 			
 			// Check if this is an edit, and not a new contact creation
 			if (this.isEditing) {
-				oDataModel.update("/ZC_PS_EMS_CONTACT_TP(UUID=guid'" + newContact.UUID + "')", newContact, {
+				oDataModel.update("/ZC_PS_EMS_CONTACT_TP(UUID=guid'" + contactBodyData.UUID + "')", contactBodyData, {
 					success: function() {
 						MessageToast.show("List updated successfully");
 					},
@@ -178,7 +183,7 @@ sap.ui.define([
 					}
 				});
 			} else {
-				oDataModel.create("/ZC_PS_EMS_CONTACT_TP", newContact, {
+				oDataModel.create("/ZC_PS_EMS_CONTACT_TP", contactBodyData, {
 					success: function() {
 						MessageToast.show("List created successfully");
 					},
@@ -194,9 +199,8 @@ sap.ui.define([
 			this.isEditing = false;
 			
 			// Update the triedToSave state
-			const newContact2 = oModel.getData();
-			newContact2.triedToSave = false;
-			this.newContactDialog.getModel().setData(newContact2);
+			newContact.triedToSave = false;
+			this.newContactDialog.getModel().setData(newContact);
 			
 			this.newContactDialog.close();
 		},
