@@ -1,0 +1,45 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+>
+    <Dialog>
+        <f:SimpleForm id="idSimpleForm" editable="true"
+        layout="ResponsiveGridLayout" title="Create a Contact"
+        columnsL="1" 
+        >
+            <f:content>
+                <c:Title text="Enter New Contact Details" />
+                <Label text="Email" />
+                <Input required="true" value="{/EMail}"
+                    valueState="{= !${/triedToSave} ? 'None' : ${/EMail}.length > 0 ? 'None' : 'Error' }"
+                 />
+
+                <Label text="Username" />
+                <Input required="true" value="{/CreateBy}" 
+                    valueState="{= !${/triedToSave} ? 'None' : ${/CreateBy}.length > 0 ? 'None' : 'Error' }"
+                />
+
+                <Label text="Custom ID" />
+                <Input required="true" value="{/PUID}" 
+                    valueState="{= !${/triedToSave} ? 'None' : ${/PUID}.length > 0 ? 'None' : 'Error' }"
+                />
+
+                <CheckBox name="Editable" text="Editable" selected="{/Update_ems_ac}" />
+
+                <l:HorizontalLayout>
+                    <l:content>
+                        <Button text="Save" type="Emphasized" press=".onCreateScreenSave" />
+                        <Button text="Cancel" type="Transparent" press=".onCreateScreenClose" />
+                    </l:content>
+                </l:HorizontalLayout>
+            </f:content>
+        </f:SimpleForm>
+    </Dialog>
+    <!--                     valueState="{= ${/EMail}.length > 0 : ${/triedToSave} ? 'None' : 'Error' }"
+ -->
+
+ <!-- <Icon src="{= ${propertyname} === 'UP' ? 'sap-icon://arrow-top' : ${propertyname} === 'DOWN' ? 'sap-icon://arrow-bottom' : 'sap-icon://arrow-left'}"/>
+ -->
+</c:FragmentDefinition>

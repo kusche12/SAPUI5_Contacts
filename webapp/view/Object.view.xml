@@ -1,0 +1,55 @@
+<mvc:View
+	controllerName="ui5contacts.controller.Object"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false"
+		busy="{objectView>/busy}"
+		busyIndicatorDelay="{objectView>/delay}">
+
+		<semantic:titleHeading>
+			<Title
+				text="Email: {EMail}"
+				level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:titleBreadcrumbs>
+            <Breadcrumbs>
+                <Link text="Home" press=".onNavBack" />
+            </Breadcrumbs>
+        </semantic:titleBreadcrumbs>
+
+		<semantic:headerContent>
+			<ObjectIdentifier text="ID: {UUID}" />
+		</semantic:headerContent>
+
+		<semantic:content>
+			<FlexBox alignItems="Start" width="50%" direction="Column">
+				<items>
+					<Text text="Custom ID: {PUID}" />
+					<Text text="Aad ID: {AadID}" />
+					<Text text="Org ID: {OrgID}" />
+					<FlexBox alignItems="Start" direction="Row">
+						<Text text="Editable:" class="sapUiSmallMarginEnd" />
+						<ObjectStatus 
+							state="{= ${Update_ems_ac} ? 'Success' : 'Error' }"
+							icon="{= ${Update_ems_ac} ? 'sap-icon://accept' : 'sap-icon://decline' }"  />
+					</FlexBox>
+					<Text text="Date Created: {CreateAt}" />
+				</items>
+			</FlexBox>
+			
+		</semantic:content>
+
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+
+	</semantic:SemanticPage>
+
+</mvc:View>

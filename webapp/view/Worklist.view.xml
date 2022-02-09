@@ -1,0 +1,106 @@
+<mvc:View
+	controllerName="ui5contacts.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title
+				text="{i18n>worklistTitle}"
+				level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:content>
+			<Table
+				id="table"
+				width="auto"
+				items="{
+					path: '/ZC_PS_EMS_CONTACT_TP',
+					sorter: {
+						path: 'UUID',
+						descending: false
+					}
+				}"
+				noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				growing="true"
+				growingScrollToLoad="true"
+				updateFinished=".onUpdateFinished">
+
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title
+							id="tableHeader"
+							text="{worklistView>/worklistTableTitle}"
+							level="H3"/>
+						<ToolbarSpacer />
+						<SearchField
+							id="searchField"
+							tooltip="{i18n>worklistSearchTooltip}"
+							search=".onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="200px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
+						<Button text="Create" type="Transparent" press=".onCreateScreenOpen" />
+					</OverflowToolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column id="nameColumn">
+						<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>
+					</Column>
+					<Column id="createColumn">
+						<Text text="{i18n>tableCreateColumnTitle}" id="createColumnTitle"/>
+					</Column>
+					<Column id="createDateColumn">
+						<Text text="{i18n>tableCreateDateColumnTitle}" id="createDateColumnTitle"/>
+					</Column>
+					<Column id="statusColumn" hAlign="End">
+						<Text text="{i18n>tableStatusColumnTitle}" id="statusColumnTitle"/>
+					</Column>
+
+					<Column	 id="editColumn" hAlign="End" width="5%">
+						<Text text="" id="editColumnTitle"/>
+					</Column>
+					<Column id="trashColumn" hAlign="End" width="5%">
+						<Text text="" id="trashColumnTitle"/>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem
+						type="Navigation"
+						press=".onPress">
+						<cells>
+							<ObjectIdentifier title="{EMail}"/>
+							<ObjectListItem title="{CreateBy}"/>
+							<ObjectListItem title="{CreateAt}"/>
+							<ObjectStatus 
+							state="{= ${Update_ems_ac} ? 'Success' : 'Error' }"
+							icon="{= ${Update_ems_ac} ? 'sap-icon://accept' : 'sap-icon://decline' }"  />
+
+							<Button icon="sap-icon://edit" type="Transparent" press=".onEdit" 
+							enabled="{= ${Update_ems_ac}}" tooltip="Edit Contact" />
+							<Button icon="sap-icon://delete" type="Transparent" press=".onDelete"  />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+
+	</semantic:SemanticPage>
+
+</mvc:View>
