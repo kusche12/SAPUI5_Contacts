@@ -226,7 +226,8 @@ sap.ui.define([
 		onDelete : function(oEvent) {
 			const oDataModel = new ODataModel("/sap/opu/odata/sap/ZC_PS_EMS_CONTACT_TP_CDS/");
 			const oContactItem = oEvent.getSource().getParent().getBindingContext().getObject();
-			oDataModel.remove("/ZC_PS_EMS_CONTACT_TP_CDS(UUID=guid'" + oContactItem.UUID + "')");
+			console.log(oContactItem.UUID)
+			oDataModel.remove("/ZC_PS_EMS_CONTACT_TP(UUID=guid'" + oContactItem.UUID + "')");
 
 			console.log('removed list with key: ' + oContactItem.UUID);
 		},
